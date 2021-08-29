@@ -15,19 +15,26 @@ const useStyles = makeStyles({
   },
 });
 
-export default function UserCard() {
+interface CardProps {
+  title: string;
+  position: number;
+  type: string;
+}
+
+export default function UserCard(props: CardProps) {
   const classes = useStyles();
+  const { title, type } = props;
 
   return (
     <Card className={classes.root}>
       <CardActionArea>
         <CardMedia
           className={classes.media}
-          image="https://picsum.photos/200/300"
+          image={`https://picsum.photos/seed/${type}/200/300`}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            Lorem Ipsum
+            {title}
           </Typography>
         </CardContent>
       </CardActionArea>
