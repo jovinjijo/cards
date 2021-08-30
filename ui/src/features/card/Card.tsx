@@ -8,13 +8,16 @@ import {
   Card,
 } from "@material-ui/core";
 import { DropTargetMonitor, useDrag, useDrop } from "react-dnd";
+import ImageDialog from "../image-dialog/ImageDialog";
+import { getImageUrl } from "../../util/Util";
 
 const useStyles = makeStyles({
   root: {
-    maxWidth: 300,
+    maxWidth: 320,
   },
   media: {
-    height: 140,
+    height: 180,
+    objectFit: "cover",
   },
 });
 
@@ -36,6 +39,9 @@ export default function UserCard(props: CardProps) {
 
   // Create a state for storing whether the image is loaded or not
   const [loaded, setLoaded] = React.useState(false);
+
+  // Create a state for storing whether the image is open in a dialog box
+  const [open, setOpen] = React.useState(false);
 
   const [{ handlerId }, drop] = useDrop({
     accept: "card",
@@ -83,7 +89,7 @@ export default function UserCard(props: CardProps) {
   return (
     <div ref={ref} style={{ opacity }} data-handler-id={handlerId}>
       <Card className={classes.root}>
-        <CardActionArea>
+        <CardActionArea onClick={() => setOpen(true)}>
           {/* 'img' is used here instead of 'CardMedia' provided by Material-UI because CardMedia doesnt provide a callback when the image is loaded.
             We Show the image once the image is loaded. We hide the spinner once the image is loaded.
             'img' is not kept inside the ternary operator because the image would never load if it's kept inside */}
@@ -95,7 +101,7 @@ export default function UserCard(props: CardProps) {
             <img
               width="100%"
               className={classes.media}
-              src={`https://picsum.photos/seed/${type}/200/300`}
+              src={getImageUrl(type, 768, 768)}
               alt={title}
               onLoad={() => setLoaded(true)}
             />
@@ -106,7 +112,7 @@ export default function UserCard(props: CardProps) {
             <div
               style={{
                 height: loaded ? "0px" : "100%",
-                minHeight: 200,
+                minHeight: 180,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -122,6 +128,7 @@ export default function UserCard(props: CardProps) {
           </CardContent>
         </CardActionArea>
       </Card>
+      <ImageDialog open={open} onClose={() => setOpen(false)} type={type} />
     </div>
   );
 }
