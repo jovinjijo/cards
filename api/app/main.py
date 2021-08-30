@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
+import os
 
 app = FastAPI()
 
@@ -15,4 +16,5 @@ def read_root():
     ]}
 
 
-app.mount("/", StaticFiles(directory="/www", html=True), name="www")
+if(os.environ.get("SERVE_UI") == 'true'):
+    app.mount("/", StaticFiles(directory="/www", html=True), name="www")

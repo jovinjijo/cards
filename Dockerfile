@@ -16,4 +16,6 @@ WORKDIR /app/
 COPY ./api/app /app
 COPY --from=ui-build /app/build /www
 
+ENV SERVE_UI=true
+
 EXPOSE 80
