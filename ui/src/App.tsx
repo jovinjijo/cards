@@ -1,6 +1,6 @@
-import React from 'react';
-import './App.css';
-import CardsDeck from './features/cards-deck/CardsDeck';
+import React from "react";
+import "./App.css";
+import CardsDeck from "./features/cards-deck/CardsDeck";
 
 function App() {
   return (
