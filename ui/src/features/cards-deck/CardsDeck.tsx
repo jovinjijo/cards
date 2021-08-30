@@ -19,7 +19,7 @@ export default function CardsDeck() {
       </Typography>
       <Grid container spacing={1}>
         {data.map((item) => (
-          <Grid item xs={4}>
+          <Grid item xs={4} key={item.position}>
             <Card {...item}></Card>
           </Grid>
         ))}
