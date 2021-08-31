@@ -1,31 +1,36 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Grid, Typography } from "@material-ui/core";
 import update from "immutability-helper";
-import Card from '../card/Card'
+import Card, { CardDetail } from "../card/Card";
+import { apiCall } from "../../util/Util";
 
 export default function CardsDeck() {
-  const [cards, setCards] = useState([
-    { type: "bank-draft", title: "Bank Draft", position: 0 },
-    { type: "bill-of-lading", title: "Bill of Lading", position: 1 },
-    { type: "invoice", title: "Invoice", position: 2 },
-    { type: "bank-draft-2", title: "Bank Draft 2", position: 3 },
-    { type: "bill-of-lading-2", title: "Bill of Lading 2", position: 4 },
-  ]);
+  const [cards, setCards] = useState<CardDetail[]>([]);
+
+  useEffect(() => {
+    const fn = async () => {
+      try {
+        const { data } = await apiCall("/api/cards", "GET");
+        setCards(data);
+      } catch (ex) {}
+    };
+    fn();
+  }, []);
 
   const moveCard = useCallback(
     (dragIndex: number, hoverIndex: number) => {
-      const dragCard = cards[dragIndex]
+      const dragCard = cards[dragIndex];
       setCards(
         update(cards, {
           $splice: [
             [dragIndex, 1],
             [hoverIndex, 0, dragCard],
           ],
-        }),
-      )
+        })
+      );
     },
-    [cards],
-  )
+    [cards]
+  );
 
   return (
     <div>
