@@ -18,7 +18,7 @@ FROM nginx AS final
 
 COPY --from=yarn-build /app/build /usr/share/nginx/html
 
-COPY nginx/nginx.conf.template /etc/nginx/templates/nginx.conf.template
+COPY nginx/default.conf.template /etc/nginx/templates/default.conf.template
 
 ENV API_HOST=backend
 ENV API_PORT=8000
