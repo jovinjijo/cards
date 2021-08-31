@@ -89,12 +89,20 @@ export default function UserCard(props: CardProps) {
       // When dragging to lower indices, only move when the cursor is above 50% or left 50%
 
       // Dragging to higher indices
-      if (dragIndex < hoverIndex && (hoverClientY < hoverMiddleY && hoverClientX < hoverMiddleX)) {
+      if (
+        dragIndex < hoverIndex &&
+        hoverClientY < hoverMiddleY &&
+        hoverClientX < hoverMiddleX
+      ) {
         return;
       }
 
       // Dragging to lower indices
-      if (dragIndex > hoverIndex && (hoverClientY > hoverMiddleY && hoverClientX > hoverMiddleX)) {
+      if (
+        dragIndex > hoverIndex &&
+        hoverClientY > hoverMiddleY &&
+        hoverClientX > hoverMiddleX
+      ) {
         return;
       }
 
