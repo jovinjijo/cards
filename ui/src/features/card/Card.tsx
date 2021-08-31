@@ -7,7 +7,7 @@ import {
   CardActionArea,
   Card,
 } from "@material-ui/core";
-import { DropTargetMonitor, useDrag, useDrop } from "react-dnd";
+import { DropTargetMonitor, useDrag, useDrop, XYCoord } from "react-dnd";
 import ImageDialog from "../image-dialog/ImageDialog";
 import { getImageUrl } from "../../util/Util";
 
@@ -21,13 +21,15 @@ const useStyles = makeStyles({
   },
 });
 
-interface DragItem {
+export interface CardDetail {
   title: string;
   position: number;
   type: string;
-  index: number;
 }
 
+interface DragItem extends CardDetail {
+  index: number;
+}
 interface CardProps extends DragItem {
   moveCard: (dragIndex: number, hoverIndex: number) => void;
 }
@@ -59,6 +61,40 @@ export default function UserCard(props: CardProps) {
 
       // Don't replace items with themselves
       if (dragIndex === hoverIndex) {
+        return;
+      }
+
+      // Determine rectangle on screen
+      const hoverBoundingRect = ref.current?.getBoundingClientRect();
+
+      // Get vertical middle
+      const hoverMiddleY =
+        (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
+
+      // Get horizontal middle
+      const hoverMiddleX =
+        (hoverBoundingRect.right - hoverBoundingRect.left) / 2;
+
+      // Determine mouse position
+      const clientOffset = monitor.getClientOffset();
+
+      // Get pixels to the top
+      const hoverClientY = (clientOffset as XYCoord).y - hoverBoundingRect.top;
+
+      // Get pixels to the left
+      const hoverClientX = (clientOffset as XYCoord).x - hoverBoundingRect.left;
+
+      // Only perform the move when the mouse has crossed half of the items height/width
+      // When dragging to higher indices, only move when the cursor is below 50% or right 50%
+      // When dragging to lower indices, only move when the cursor is above 50% or left 50%
+
+      // Dragging to higher indices
+      if (dragIndex < hoverIndex && (hoverClientY < hoverMiddleY && hoverClientX < hoverMiddleX)) {
+        return;
+      }
+
+      // Dragging to lower indices
+      if (dragIndex > hoverIndex && (hoverClientY > hoverMiddleY && hoverClientX > hoverMiddleX)) {
         return;
       }
 
