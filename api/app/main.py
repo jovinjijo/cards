@@ -1,11 +1,9 @@
 from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
-import os
 
 app = FastAPI()
 
 
-@app.get("/api")
+@app.get("/api/cards")
 def read_root():
     return {"data": [
         {"type": "bank-draft", "title": "Bank Draft", "position": 0},
@@ -14,7 +12,3 @@ def read_root():
         {"type": "bank-draft-2", "title": "Bank Draft 2", "position": 3},
         {"type": "bill-of-lading-2", "title": "Bill of Lading 2", "position": 4},
     ]}
-
-
-if(os.environ.get("SERVE_UI") == 'true'):
-    app.mount("/", StaticFiles(directory="/www", html=True), name="www")
