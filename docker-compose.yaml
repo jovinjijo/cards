@@ -1,0 +1,26 @@
+version: "3"
+services:
+  backend:
+    image: jov96/cards-api:latest
+    build:
+      context: ./api
+    networks:
+      - cards-nw
+    ports:
+      - 8000:80
+  ui:
+    image: jov96/cards-ui:latest
+    build:
+      context: ./ui
+    networks:
+      - cards-nw
+    environment:
+      - API_HOST=backend
+      - API_PORT=80
+    ports:
+      - 8080:80
+    depends_on:
+      - backend
+networks:
+  cards-nw:
+    driver: bridge
