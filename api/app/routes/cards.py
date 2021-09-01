@@ -18,6 +18,11 @@ def create_card(card: schemas.Card, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Card already exists")
     return crud.create_card(db=db, card=card)
 
+# Route for updating multiple cards
+@router.patch("", response_model=List[schemas.Card])
+def update_cards(cards: List[schemas.Card], db: Session = Depends(get_db)):
+    return crud.update_cards(db=db, cards=cards)
+
 # Route for getting all cards
 @router.get("", response_model=List[schemas.Card])
 def read_cards(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
