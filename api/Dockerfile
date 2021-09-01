@@ -1,7 +1,16 @@
-FROM tiangolo/uvicorn-gunicorn-fastapi:python3.7 AS final
+FROM python:3-slim
 
-WORKDIR /app/
+ENV PYTHONUNBUFFERED 1
 
-COPY ./app /app
+WORKDIR /app
 
-EXPOSE 80
+COPY poetry.lock pyproject.toml ./
+RUN pip install poetry==1.1
+RUN poetry config virtualenvs.in-project true && \
+    poetry install --no-dev
+
+COPY . ./
+
+EXPOSE 8000
+
+CMD poetry run uvicorn --host=0.0.0.0 app.main:app

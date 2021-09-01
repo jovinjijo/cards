@@ -1,14 +1,22 @@
 from fastapi import FastAPI
 
-app = FastAPI()
+from app.routes.api import router as api_router
+from app.core.config import API_PREFIX
+from app.db.database import engine
+from app.models import models
+from app.util.init_data import create_cards
+
+models.Base.metadata.create_all(bind=engine)
 
 
-@app.get("/api/cards")
-def read_root():
-    return {"data": [
-        {"type": "bank-draft", "title": "Bank Draft", "position": 0},
-        {"type": "bill-of-lading", "title": "Bill of Lading", "position": 1},
-        {"type": "invoice", "title": "Invoice", "position": 2},
-        {"type": "bank-draft-2", "title": "Bank Draft 2", "position": 3},
-        {"type": "bill-of-lading-2", "title": "Bill of Lading 2", "position": 4},
-    ]}
+def get_application() -> FastAPI:
+    application = FastAPI()
+
+    application.include_router(api_router, prefix=API_PREFIX)
+
+    create_cards()
+
+    return application
+
+
+app = get_application()

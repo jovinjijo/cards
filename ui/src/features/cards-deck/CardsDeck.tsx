@@ -10,8 +10,8 @@ export default function CardsDeck() {
   useEffect(() => {
     const fn = async () => {
       try {
-        const { data } = await apiCall("/api/cards", "GET");
-        setCards(data);
+        const cards = await apiCall("/api/cards", "GET");
+        setCards(cards);
       } catch (ex) {}
     };
     fn();
