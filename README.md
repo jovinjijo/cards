@@ -1,5 +1,7 @@
 # Cards
 
+![Demo](./assets/demo.gif)
+
 React application that demonstrates user interactions on Cards like drag and drop. It uses FastAPI for the backend for serving the data rendered in the UI.
 
 ## Features
