@@ -11,8 +11,9 @@ services:
     restart: on-failure
   backend:
     image: jov96/cards-api:latest
-    build:
-      context: ./api
+    # Uncomment below lines if you want docker to build the image locally and use it
+    # build:
+    #   context: ./api
     networks:
       - cards-nw
     environment:
@@ -24,8 +25,9 @@ services:
     restart: on-failure
   ui:
     image: jov96/cards-ui:latest
-    build:
-      context: ./ui
+    # Uncomment below lines if you want docker to build the image locally and use it
+    # build:
+    #   context: ./ui
     networks:
       - cards-nw
     environment:

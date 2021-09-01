@@ -12,6 +12,7 @@ React application that demonstrates user interactions on Cards like drag and dro
  - Order of cards get saved in the backend every 5 seconds, if it gets changed
  - UI shows when it wsa last saved
  - UI shows a spinner while the data is getting saved
+ - On every push to the ```main``` branch, the docker images for ui and backend are built and pushed using a [Github Action](.github/workflows/build-push.yml)
 
 ## Components
  - Frontend built on React
@@ -41,6 +42,8 @@ For demoing the application, it can be run by installing Docker and running
 docker-compose up -d
 ```
 [Frontend](http://localhost:8080) | [pgAdmin](http://localhost:5050) (```foo@bar.com``` : ```password```)
+
+Use ```docker-compose down``` to stop the application.
 
 For development, the application can be run as follows
 
