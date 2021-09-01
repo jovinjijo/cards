@@ -25,3 +25,7 @@ It's used to show the overlay with the image of the card when a card is clicked.
 
  - [picsum.photos](picsum.photos) is used to display images based on a random seed of card type
  - Requests to Backend are proxied to backend using NGINX. More details [here](./nginx/default.conf.template) and [here](./Dockerfile)
+
+### Assumptions
+
+ - Since this is a small application, Redux is not used.

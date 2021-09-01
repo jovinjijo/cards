@@ -18,9 +18,7 @@ React application that demonstrates user interactions on Cards like drag and dro
 
 Frontend is built on React using [create-react-app](https://create-react-app.dev/).
 
-#### Assumptions
-
- - Since this is a small application, Redux is not used.
+[More Details](./ui/README.md)
 
 ### Backend
 
