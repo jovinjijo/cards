@@ -9,6 +9,9 @@ React application that demonstrates user interactions on Cards like drag and dro
  - Cards can be reordered by drag and drop
  - Dialog box to show details of the card on click
  - Spinner while image is loading on the card
+ - Order of cards get saved in the backend every 5 seconds, if it gets changed
+ - UI shows when it wsa last saved
+ - UI shows a spinner while the data is getting saved
 
 ## Components
  - Frontend built on React
@@ -22,7 +25,7 @@ Frontend is built on React using [create-react-app](https://create-react-app.dev
 
 ### Backend
 
-Backend is built using FastAPI. It can use either PostgreSQL or SQLite as it's database. There is only one resource for CRUD operations on Card
+Backend is built using FastAPI. It can use either PostgreSQL or SQLite as it's database. There is only one entity for CRUD operations, that is 'Card'.
 
 [More Details](./api/README.md)
 
@@ -37,6 +40,7 @@ For demoing the application, it can be run by installing Docker and running
 ```sh
 docker-compose up -d
 ```
+[Frontend](http://localhost:8080) | [pgAdmin](http://localhost:5050) (```foo@bar.com``` : ```password```)
 
 For development, the application can be run as follows
 
@@ -55,6 +59,8 @@ poetry install
 poetry run uvicorn app.main:app --reload
 ```
 
+ - Test it works properly by opening [http://localhost:8000/api/cards](http://localhost:8000/api/cards) and see if the JSON of cards is displayed.
+
  - Install yarn
 
 ```sh
@@ -68,6 +74,8 @@ cd ui
 yarn install
 yarn start
 ```
+
+ - UI can be opened from [http://localhost:3000](http://localhost:3000)
 
  - The above steps will run the application using SQLite. If you want to use PostgreSQL, give the URL of the running instance in an environment variable like this for Linux/Mac
 
